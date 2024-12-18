@@ -20,28 +20,23 @@ const data = {
   navMain: [
     {
       title: "Getting Started",
-      url: "#1"
     },
     {
       title: "Building Your Application",
-      url: "#2"
     },
     {
       title: "API Reference",
-      url: "#3"
     },
     {
       title: "Architecture",
-      url: "#4"
     },
     {
       title: "Community",
-      url: "#5",
     },
   ],
 }
 
-export function AppSidebar({
+export function AppSidebar({setsidebartitle,
   ...props
 }) {
   return (
@@ -69,10 +64,10 @@ export function AppSidebar({
           <SidebarMenu>
             {data.navMain.map((item) => (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                  <a href={item.url} className="font-medium">
+                <SidebarMenuButton asChild onClick={()=>{setsidebartitle(item.title)}}>
+                  <p  className="font-medium cursor-pointer" >
                     {item.title}
-                  </a>
+                  </p>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}

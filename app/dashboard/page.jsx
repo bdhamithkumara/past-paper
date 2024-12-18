@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { account } from '../appwrite'
-import { AppSidebar } from "@/components/app-sidebar"
+import { AppSidebar } from "@/app/dashboard/innerdashboard/app-sidebar"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -17,9 +17,12 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 
-const page = () => {
+
+
+const dashboard = ({children}) => {
 
     const [userData, setUserData] = useState()
+    const [sideBarTitle,setsidebartitle] = useState('')
 
     useEffect(() => {
         const checkUser = async () => {
@@ -49,28 +52,27 @@ const page = () => {
     }, [])
 
 
+    console.log(sideBarTitle)
 
     return (
         <SidebarProvider>
-        <AppSidebar />
+        <AppSidebar
+        setsidebartitle={setsidebartitle}
+        />
         <SidebarInset>
           <header className="flex h-16 shrink-0 items-center gap-2 border-b">
             <div className="flex items-center gap-2 px-3">
-              <SidebarTrigger />
+              <SidebarTrigger /> 
               <Separator orientation="vertical" className="mr-2 h-4" />
+              {sideBarTitle}
             </div>
           </header>
           <div className="flex flex-1 flex-col gap-4 p-4">
-            <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-              <div className="aspect-video rounded-xl bg-muted/50" />
-              <div className="aspect-video rounded-xl bg-muted/50" />
-              <div className="aspect-video rounded-xl bg-muted/50" />
-            </div>
-            <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+            {}
           </div>
         </SidebarInset>
       </SidebarProvider>
     )
 }
 
-export default page
+export default dashboard

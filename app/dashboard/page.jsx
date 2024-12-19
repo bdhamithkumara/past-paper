@@ -16,7 +16,9 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-
+import Page1 from './innerdashboard/page1/page'
+import Page2 from './innerdashboard/page2/page'
+import Page3 from './innerdashboard/page3/page'
 
 
 const dashboard = ({children}) => {
@@ -68,7 +70,7 @@ const dashboard = ({children}) => {
             </div>
           </header>
           <div className="flex flex-1 flex-col gap-4 p-4">
-            {}
+            
           </div>
         </SidebarInset>
       </SidebarProvider>

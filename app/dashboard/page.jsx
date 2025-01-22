@@ -19,39 +19,60 @@ import {
 import Page1 from './innerdashboard/page1/page'
 import Page2 from './innerdashboard/page2/page'
 import Page3 from './innerdashboard/page3/page'
-
+import { useRouter } from 'next/navigation';
 
 const dashboard = ({children}) => {
 
     const [userData, setUserData] = useState()
     const [sideBarTitle,setsidebartitle] = useState('')
+    const router = useRouter();
 
     useEffect(() => {
-        const checkUser = async () => {
-            try {
-                const userData = await account.get()
-                console.log(userData)
-
-                const authorizedUsers = ["damithkumararoxx55@gmail.com"];
-
-                if (!authorizedUsers.includes(userData?.email)) {
-
-                    try {
-                        await account.deleteSession('current')
-                        window.location.href = "/";
-                    } catch (error) {
-                        console.error(error)
-                    }
-                }
-
-                setUserData(userData)
-            } catch (error) {
-                console.error(error)
-            }
+      const checkSession = async () => {
+        try {
+          const session = await account.get();
+          if (session) {
+            router.push('/dashboard'); 
+          }else{
+            router.push('/web');
+          }
+        } catch (error) {
+          console.error('Not logged in:', error);
         }
+      };
+  
+      checkSession();
+    }, []);
 
-        checkUser()
-    }, [])
+    useEffect(() => {
+      const checkUser = async () => {
+          try {
+              const userData = await account.get(); // Fetch user data
+              console.log(userData);
+  
+              const authorizedUsers = ["damithkumararoxx55@gmail.com"];
+  
+              if (!authorizedUsers.includes(userData?.email)) {
+                  // If user is not authorized, delete the session and redirect
+                  try {
+                      await account.deleteSession('current');
+                      window.location.href = "/";
+                  } catch (error) {
+                      console.error("Error deleting session:", error);
+                  }
+              }
+  
+              // Set user data if the user is authorized
+              setUserData(userData);
+          } catch (error) {
+              console.error("Error fetching user data:", error);
+  
+              window.location.href = "/";
+          }
+      };
+  
+      checkUser();
+  }, []);
 
 
     console.log(sideBarTitle)
